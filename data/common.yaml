@@ -61,7 +61,6 @@ quagga::packages:
   quagga:
     ensure: "present"
 quagga::logging::backend: "syslog"
-quagga::logging::filename:
 quagga::logging::level: "errors"
 quagga::zebra::agentx: false
 quagga::zebra::hostname: "%{::facts.networking.fqdn}"

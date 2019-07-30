@@ -5,7 +5,6 @@ class quagga::logging (
     Enum['monitor', 'stdout', 'syslog'],
     Pattern[/\Afile\s(\/\S+)+\Z/]
   ]                              $backend,
-  Optional[Stdlib::Absolutepath] $filename,
   Enum[
     'alerts',
     'critical',
@@ -17,8 +16,13 @@ class quagga::logging (
     'warnings'
   ]                              $level,
 ) {
-  quagga_logging { $backend:
+
+  $backend_type = regsubst($backend, '\Afile\s(\/\S+)+\Z', 'file')
+  $filename = regsubst($backend, '\Afile\s', '')
+
+  quagga_logging { $backend_type:
     filename => $filename,
     level    => $level,
   }
+
 }

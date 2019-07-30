@@ -62,6 +62,8 @@ Puppet::Type.type(:quagga_logging).provide :quagga do
   end
 
   def create
+    @property_hash = @resource.to_hash
+    debug 'Creating the resource %{resource}.' % { resource: @resource.to_hash.inspect }
     @property_hash[:ensure] = :present
   end
 
@@ -78,7 +80,7 @@ Puppet::Type.type(:quagga_logging).provide :quagga do
       command = %w[log]
       command << @property_hash[:name]
 
-      if @property_hash[:name] == 'file'
+      if @property_hash[:name].to_s == 'file'
         command << filename
       end
 
